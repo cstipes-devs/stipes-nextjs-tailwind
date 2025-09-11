@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+
+body {
+  @apply bg-black text-zinc-200;
+  background:
+    radial-gradient(1200px 800px at 80% -10%, rgba(0, 224, 164, 0.15), transparent 60%),
+    radial-gradient(900px 600px at -10% 10%, rgba(0, 224, 164, 0.08), transparent 60%),
+    #0b0b0b;
+}
+
+.container-narrow { @apply max-w-6xl mx-auto px-6; }
+.card { @apply rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm shadow-soft; }
+.badge { @apply inline-flex items-center gap-2 rounded-full border border-zinc-700 bg-zinc-900 px-3 py-1 text-sm text-zinc-300; }
+.link { @apply text-zinc-200 hover:text-white underline decoration-accent-500/60 underline-offset-4; }
