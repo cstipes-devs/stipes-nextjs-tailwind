@@ -19,7 +19,7 @@ export default function AboutPage() {
           <p>ENGINEERING LEADER</p>
           <p>Backend &amp; Platform Engineering | Scaling Teams &amp; Systems | Quality &amp; Reliability | Observability | GenAI Readiness</p>
           <div className="h-3" />
-          <p>Engineering leader with 12+ years across backend, platform, QA, and mobile. Scaled teams, modernized infra, and built resilient, observable systems. Passionate about developer velocity, testing in production, and high-impact platforms. Recently focused on integrating Generative AI into quality, automation, and performance strategies.</p>
+          <p>Engineering leader with 12+ years of experience across backend, platform, QA, and mobile engineering. Proven track record of scaling teams, modernizing infrastructure, and building resilient, observable, and secure systems. Experienced in leading integrations with external providers, driving API interoperability, and architecting AWS serverless data pipelines. Passionate about developer velocity, testing in production, and building high-impact platforms. Hands-on technical background with a people-first leadership style.</p>
           <div className="h-3" />
           <p>CORE SKILLS</p>
           <p>- Programming &amp; Frameworks: Go, Python, Ruby, JavaScript, gRPC/Protobuf, GraphQL</p>
@@ -74,4 +74,3 @@ export default function AboutPage() {
     </main>
   );
 }
-

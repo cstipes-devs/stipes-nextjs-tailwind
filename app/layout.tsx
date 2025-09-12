@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Chris Stipes — Software Engineering Leader",
-  description: "Minimal portfolio inspired layout built with Next.js and Tailwind CSS.",
+  description: "Engineering leader with 12+ years across backend, platform, QA, and mobile; scales teams, modernizes infrastructure, and builds resilient, observable, secure systems.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
