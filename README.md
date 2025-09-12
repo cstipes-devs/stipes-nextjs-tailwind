@@ -1,4 +1,4 @@
-# Pahlani-like Starter (Next.js + Tailwind)
+# Resume Site Starter (Next.js + Tailwind)
 
 A minimalist, performance-oriented portfolio starter inspired by the aesthetic of pahlani.com — **not a clone** (no copied content), but a faithful, clean vibe: dark UI, strong typography, subtle glassy cards, and metric tiles.
 
