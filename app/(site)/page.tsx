@@ -3,7 +3,7 @@ import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
 import { Section } from "./components/Section";
 import { StatCard } from "./components/StatCard";
-import { ProjectCard } from "./components/ProjectCard";
+ 
 
 export default function Page() {
   return (
@@ -46,13 +46,7 @@ export default function Page() {
         </div>
       </Section>
 
-      <Section title="Selected Work" eyebrow="Projects">
-        <div className="grid gap-6 md:grid-cols-3">
-          <ProjectCard title="Receipt Ingestion" blurb="Low-latency pipelines processing millions/day." />
-          <ProjectCard title="Ad Platform Revamp" blurb="Multi-vendor mediation with high availability." />
-          <ProjectCard title="Mobile Automation" blurb="Unified Appium harness across iOS/Android." />
-        </div>
-      </Section>
+      
 
       <Section title="Writing" eyebrow="Notes">
         <div className="grid gap-6 md:grid-cols-2">
@@ -73,4 +67,3 @@ export default function Page() {
     </main>
   );
 }
-
