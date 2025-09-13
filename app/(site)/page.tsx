@@ -3,7 +3,7 @@ import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
 import { Section } from "./components/Section";
 import { StatCard } from "./components/StatCard";
- 
+import { ChatWidget } from "./components/ChatWidget";
 
 export default function Page() {
   return (
@@ -46,7 +46,7 @@ export default function Page() {
         </div>
       </Section>
 
-      
+      <ChatWidget />
 
       <Section title="Writing" eyebrow="Notes">
         <div className="grid gap-6 md:grid-cols-2">
