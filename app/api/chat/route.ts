@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const { prompt } = await req.json();
-    const upstream = await fetch("http://localhost:8081/v1/chat", {
+    const upstream = await fetch("https://stipes-openai-chat.vercel.app/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
