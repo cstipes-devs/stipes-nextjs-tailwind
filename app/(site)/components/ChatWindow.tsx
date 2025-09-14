@@ -44,7 +44,7 @@ export function ChatWindow() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ message: prompt }),
       });
 
       if (!res.ok) {
@@ -57,7 +57,14 @@ export function ChatWindow() {
       const contentType = res.headers.get("content-type") || "";
       if (contentType.includes("application/json")) {
         const data = await res.json();
+        // Common shapes: { reply }, { response }, { message }, { text }, { output }
+        // OpenAI-like: { choices: [{ message: { content } }] } or { message: { content } }
+        const fromChoices =
+          (data?.choices?.[0]?.message?.content as string | undefined) ??
+          (data?.message?.content as string | undefined);
         replyText =
+          fromChoices ??
+          (data?.answer as string) ??
           (data?.reply as string) ??
           (data?.response as string) ??
           (data?.message as string) ??
@@ -68,7 +75,8 @@ export function ChatWindow() {
         replyText = await res.text();
       }
 
-      setMessages((m) => [...m, { id: id + "-a", role: "assistant", content: replyText }]);
+      const safeText = replyText && replyText.trim().length > 0 ? replyText : "(no content)";
+      setMessages((m) => [...m, { id: id + "-a", role: "assistant", content: safeText }]);
     } catch (err: any) {
       setMessages((m) => [
         ...m,
