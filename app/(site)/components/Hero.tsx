@@ -7,10 +7,11 @@ export function Hero() {
         <Image
           src="/profile.png"
           alt="Profile photo of Chris Stipes"
-          width={128}
-          height={128}
+          width={640}
+          height={1024}
+          sizes="(min-width: 1024px) 20rem, (min-width: 768px) 16rem, 10rem"
           priority
-          className="h-32 w-32 shrink-0 rounded-xl border border-zinc-800 object-cover shadow-lg shadow-black/40 ring-1 ring-zinc-700/40"
+          className="w-40 md:w-64 lg:w-80 h-auto shrink-0 rounded-xl border border-zinc-800 shadow-lg shadow-black/40 ring-1 ring-zinc-700/40"
         />
         <div>
           <div className="badge">Software Engineering Leader</div>

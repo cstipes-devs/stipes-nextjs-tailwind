@@ -11,9 +11,10 @@ export default function Page() {
       <Navbar />
       <Hero />
 
-      <div className="container-narrow mt-12 grid gap-6 md:grid-cols-3">
+      <div className="container-narrow mt-12 grid gap-6 md:grid-cols-4">
         <StatCard label="Monthly Active Users" value="12M+" />
         <StatCard label="Peak Throughput" value="80k RPS" />
+        <StatCard label="Stable Mobile Releases a year" value="52" hint="Once a week on iOS and Android" />
         <StatCard label="Receipts / week" value="80M+" />
       </div>
 
