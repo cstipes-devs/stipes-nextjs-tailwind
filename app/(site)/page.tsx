@@ -4,6 +4,7 @@ import { Hero } from "./components/Hero";
 import { Section } from "./components/Section";
 import { StatCard } from "./components/StatCard";
 import { ChatWidget } from "./components/ChatWidget";
+import { WipIcon } from "./components/WipIcon";
 
 export default function Page() {
   return (
@@ -108,12 +109,18 @@ export default function Page() {
       <Section title="Writing" eyebrow="Notes">
         <div className="grid gap-6 md:grid-cols-2">
           <a className="card p-6 hover:border-zinc-600 transition" href="#">
-            <div className="badge">Architecture</div>
+            <div className="flex items-center justify-between">
+              <div className="badge">Architecture</div>
+              <WipIcon />
+            </div>
             <h3 className="mt-3 text-xl font-semibold">SLOs that matter</h3>
             <p className="mt-2 text-zinc-400">Picking the right golden signals for your users—not your dashboards.</p>
           </a>
           <a className="card p-6 hover:border-zinc-600 transition" href="#">
-            <div className="badge">Quality</div>
+            <div className="flex items-center justify-between">
+              <div className="badge">Quality</div>
+              <WipIcon />
+            </div>
             <h3 className="mt-3 text-xl font-semibold">Load testing that sticks</h3>
             <p className="mt-2 text-zinc-400">Keeping perf baselines alive after the first big launch.</p>
           </a>
