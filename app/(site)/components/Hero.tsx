@@ -24,6 +24,14 @@ export function Hero() {
           <div className="mt-6 flex gap-3">
             <a className="badge hover:border-zinc-600" href="mailto:chris.stipes@gmail.com">Get in touch</a>
             <a className="badge hover:border-zinc-600" href="https://github.com/cstipes-devs" target="_blank" rel="noreferrer noopener">GitHub</a>
+            <a
+              className="badge hover:border-zinc-600"
+              href="https://www.linkedin.com/in/chris-stipes-186ab033/"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              LinkedIn
+            </a>
           </div>
         </div>
       </div>

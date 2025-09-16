@@ -47,6 +47,62 @@ export default function Page() {
         </div>
       </Section>
 
+      <Section title="Core Skills" eyebrow="CORE SKILLS">
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="card p-6">
+            <div className="flex items-center gap-3">
+              <svg className="h-5 w-5 text-accent-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M9 16L5 12L9 8"/>
+                <path d="M15 8L19 12L15 16"/>
+                <path d="M13 6L11 18"/>
+              </svg>
+              <h3 className="text-xl font-semibold">Programming & Frameworks</h3>
+            </div>
+            <p className="mt-2 text-zinc-400">Go, Python, Ruby, JavaScript, gRPC/Protobuf, GraphQL</p>
+          </div>
+          <div className="card p-6">
+            <div className="flex items-center gap-3">
+              <svg className="h-5 w-5 text-accent-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M8 12l3 3 5-6"/>
+              </svg>
+              <h3 className="text-xl font-semibold">Quality & Automation</h3>
+            </div>
+            <p className="mt-2 text-zinc-400">Playwright, Appium, Cypress, Detox, Selenium, Postman, custom Go/Python test frameworks</p>
+          </div>
+          <div className="card p-6">
+            <div className="flex items-center gap-3">
+              <svg className="h-5 w-5 text-accent-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M4 14a8 8 0 0116 0"/>
+                <path d="M12 14l3-3"/>
+                <path d="M12 14v5"/>
+              </svg>
+              <h3 className="text-xl font-semibold">Performance & Reliability</h3>
+            </div>
+            <p className="mt-2 text-zinc-400">Locust, Grafana k6, Artillery, Observability-driven testing, CI/CD quality gates</p>
+          </div>
+          <div className="card p-6">
+            <div className="flex items-center gap-3">
+              <svg className="h-5 w-5 text-accent-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M7 16a4 4 0 010-8 5 5 0 019.6 1.2A3.5 3.5 0 1118 16H7z"/>
+              </svg>
+              <h3 className="text-xl font-semibold">Cloud & Platforms</h3>
+            </div>
+            <p className="mt-2 text-zinc-400">AWS (S3, Lambda, SNS/SQS), Docker, Microservices, Snowflake</p>
+          </div>
+          <div className="card p-6">
+            <div className="flex items-center gap-3">
+              <svg className="h-5 w-5 text-accent-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 3l1.8 3.8L18 8.2l-3.2 2.2.9 3.9L12 12.8 8.3 14.3l.9-3.9L6 8.2l4.2-1.4L12 3z"/>
+                <path d="M18.5 16l.9 1.8 2 .7-1.7 1.2.5 2-1.7-1-1.7 1 .5-2-1.7-1.2 2-.7.9-1.8z"/>
+              </svg>
+              <h3 className="text-xl font-semibold">GenAI & Data</h3>
+            </div>
+            <p className="mt-2 text-zinc-400">Prompt engineering, ML/AI quality validation, LLM-based test design (emerging), Python-based ML benchmarking tools</p>
+          </div>
+        </div>
+      </Section>
+
       <ChatWidget />
 
       <Section title="Writing" eyebrow="Notes">
