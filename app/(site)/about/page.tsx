@@ -9,63 +9,150 @@ export default function AboutPage() {
           <p className="mt-2 text-zinc-400">Résumé</p>
         </div>
         <article className="card p-6">
-          <p>Chris Stipes</p>
-          <p>
-            Birmingham, AL • <a className="link" href="mailto:chris.stipes@gmail.com">chris.stipes@gmail.com</a> • (205) 999-9781 •
-            <a className="link" href="https://www.linkedin.com/in/chris-stipes-186ab033" target="_blank" rel="noreferrer noopener"> linkedin.com/in/chris-stipes-186ab033</a> •
-            <a className="link" href="https://github.com/cstipes-devs" target="_blank" rel="noreferrer noopener"> github.com/cstipes-devs</a>
-          </p>
-          <div className="h-3" />
-          <p>ENGINEERING LEADER</p>
-          <p>Backend &amp; Platform Engineering | Scaling Teams &amp; Systems | Quality &amp; Reliability | Observability | GenAI Readiness</p>
-          <div className="h-3" />
-          <p>Engineering leader with 12+ years of experience across backend, platform, QA, and mobile engineering. Proven track record of scaling teams, modernizing infrastructure, and building resilient, observable, and secure systems. Experienced in leading integrations with external providers, driving API interoperability, and architecting AWS serverless data pipelines. Passionate about developer velocity, testing in production, and building high-impact platforms. Hands-on technical background with a people-first leadership style.</p>
-          <div className="h-3" />
-          <p>CORE SKILLS</p>
-          <p>- Programming &amp; Frameworks: Go, Python, Ruby, JavaScript, gRPC/Protobuf, GraphQL</p>
-          <p>- Quality &amp; Automation: Playwright, Appium, Cypress, Detox, Selenium, Postman, custom Go/Python test frameworks</p>
-          <p>- Performance &amp; Reliability: Locust, Grafana k6, Artillery, Observability-driven testing, CI/CD quality gates</p>
-          <p>- Cloud &amp; Platforms: AWS (S3, Lambda, SNS/SQS), Docker, Microservices, Snowflake</p>
-          <p>- GenAI &amp; Data: Prompt engineering, ML/AI quality validation, LLM-based test design (emerging), Python-based ML benchmarking tools</p>
-          <div className="h-3" />
-          <p>EXPERIENCE</p>
-          <p>Fetch Rewards — Digital Receipts Tech Lead / Backend Engineer (May 2024 – Jul 2025)</p>
-          <p>- Scaled system to process 1.5–2M digital orders daily; market-ready data product.</p>
-          <p>- Reduced incident frequency from multiple per month to near-zero; improved reliability.</p>
-          <p>- Doubled iOS/Android user share from 18% to 39% of active users.</p>
-          <p>- Created a Python-based ML benchmarking tool for receipt model accuracy.</p>
-          <div className="h-3" />
-          <p>Fetch Rewards — Director of Quality Engineering / SDET (Nov 2022 – May 2024)</p>
-          <p>- Directed QA org of 40+; led managers and senior ICs.</p>
-          <p>- Weekly release cadence across iOS and Android.</p>
-          <p>- Observability-driven testing in production workflows.</p>
-          <p>- Adopted Appium, Playwright, and Go/Python data testing frameworks.</p>
-          <div className="h-3" />
-          <p>Shipt — Engineering Manager / Backend Engineer (Oct 2020 – Nov 2022)</p>
-          <p>- Re-architected Ad-tech platform for multi-vendor mediation &amp; HA.</p>
-          <p>- Improved relevancy &amp; placements; ~15% ad revenue growth.</p>
-          <p>- Drove GraphQL adoption; contract/schema validation at build.</p>
-          <p>- Doubled team size via hiring &amp; mentorship.</p>
-          <div className="h-3" />
-          <p>Shipt — Senior Backend Engineer (Oct 2019 – Oct 2020)</p>
-          <p>- Rebuilt 'Shelf' in Go as a headless CMS; 20% performance gain.</p>
-          <p>- Partnered with Data Science for faster recommendations.</p>
-          <p>- CMS tooling for non-engineer content launches.</p>
-          <p>- Migrated large portions of Ruby monolith to microservices.</p>
-          <div className="h-3" />
-          <p>Shipt — QA Manager / SDET (Jun 2018 – Oct 2019)</p>
-          <p>- Replaced Postman tests with embedded microservice frameworks.</p>
-          <p>- Introduced Cypress and Detox E2E testing.</p>
-          <p>- Built Locust + Grafana load framework integrated in service reports.</p>
-          <p>- UI-driven data validation for ingestion &amp; relevance.</p>
-          <div className="h-3" />
-          <p>Guidewire Software — Lead SDET (Jun 2015 – Jun 2018)</p>
-          <p>- Built first mobile + web automation (Appium + Selenium, Java).</p>
-          <p>- Excel tooling for non-technical test data generation.</p>
-          <p>- Artillery load testing integrated into templates.</p>
-          <div className="h-3" />
-          <p>EDUCATION</p>
-          <p>University of Alabama — B.A., 2007</p>
+          <h2 className="text-2xl font-semibold tracking-tight">CHRISTOPHER STIPES</h2>
+          <div className="mt-1 text-zinc-400">Engineering Leader</div>
+
+          <div className="mt-4 grid gap-1 text-sm">
+            <a className="link" href="mailto:chris.stipes@gmail.com">chris.stipes@gmail.com</a>
+            <a className="link" href="tel:+12059999781">+12059999781</a>
+            <a className="link" href="https://www.linkedin.com/in/chris-stipes-186ab033" target="_blank" rel="noreferrer noopener">linkedin.com/in/chris-stipes-186ab033</a>
+            <div className="text-zinc-400">Birmingham, AL</div>
+          </div>
+
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold">Experience</h3>
+            <div className="mt-4">
+              <div className="text-lg font-medium">Digital Receipts Tech Lead</div>
+              <div className="text-zinc-400">Fetch Rewards • 05/2024 - 07/2025</div>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-zinc-300">
+                <li>Scaled receipt ingestion pipeline to process 1.5-2M digital orders daily, delivering a high-performing and reliable data product</li>
+                <li>Reduced incidents from multiple per month to near-zero by enforcing observability, automation, and CI/CD quality validation</li>
+                <li>Partnered across backend, ML, mobile, and data teams to enforce cross-team QA/QE standards</li>
+                <li>Defined and tracked quality metrics (release stability, defect escape rate, hotfix frequency) to ensure system reliability</li>
+                <li>Dockerized Go-based integration tests, embedding them into CI/CD pipelines</li>
+                <li>Built a real-world data library for receipts by leveraging customer event streams into Snowflake, enabling robust automated test data setup</li>
+                <li>Presented monthly at company-wide tech all-hands with Grafana dashboards to highlight KPIs, improvements, and challenges impacting quality metrics</li>
+              </ul>
+            </div>
+
+            <div className="mt-6">
+              <div className="text-lg font-medium">Director of Quality Engineering / SDET</div>
+              <div className="text-zinc-400">Unknown • 11/2022 - 05/2024 • Birmingham, AL</div>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-zinc-300">
+                <li>Directed a QA organization of 40+ staff and 4 managers, implementing best practices and leading automation initiatives.</li>
+                <li>Established automation testing frameworks (Appium, Playwright, Go/Python), integrating them into CI/CD pipelines for continuous validation.</li>
+                <li>Built a scalable test environment strategy, driving cross-platform testing across iOS, Android, backend, and web applications.</li>
+                <li>Oversaw the automation of regression and sanity test suites, enhancing reliable coverage and streamlining regression cycles.</li>
+                <li>Led POCs for new automation frameworks, scaling successful pilots and delivering hands off test data setup systems.</li>
+                <li>Established human-readable reporting of test results to Slack and Jira, ensuring visibility and faster issue resolution.</li>
+                <li>Acted as a liaison with product, engineering, and business teams to ensure alignment and collaboration.</li>
+              </ul>
+            </div>
+
+            <div className="mt-6">
+              <div className="text-lg font-medium">Engineering Manager</div>
+              <div className="text-zinc-400">Shipt • 10/2020 - 11/2022 • Birmingham, AL</div>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-zinc-300">
+                <li>Led a cross-functional team of 10 engineers (mobile, web, backend, data) to deliver scalable ad-tech platforms</li>
+                <li>Re-architected systems for high availability and multivendor support</li>
+                <li>Introduced contract/schema validation at build time, embedding quality into CI/CD pipelines</li>
+                <li>Increased ad revenue ~15% through product reliability and placement optimizations</li>
+                <li>Drove adoption of modern QA tools (Cypress, Detox, Postman replacements) and mentored engineers on quality-first practices</li>
+              </ul>
+            </div>
+
+            <div className="mt-6">
+              <div className="text-lg font-medium">QA Manager/SDET</div>
+              <div className="text-zinc-400">06/2018 - 10/2019 • Birmingham, AL</div>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-zinc-300">
+                <li>Introduced Cypress and Detox for end-to-end testing across platforms</li>
+                <li>Replaced Postman-based testing with embedded test frameworks for backend services</li>
+                <li>Built Locust + Grafana load testing framework integrated with CI/CD reporting</li>
+                <li>Designed automated data validation system for product ingestion and search relevance</li>
+              </ul>
+            </div>
+
+            <div className="mt-6">
+              <div className="text-lg font-medium">Lead SDET</div>
+              <div className="text-zinc-400">Guidewire Software • 06/2015 - 06/2018 • Birmingham, AL</div>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-zinc-300">
+                <li>Improved testing efficiency by 25% by developing a new automation framework for mobile and web using Appium and Selenium.</li>
+                <li>Created Excel-based automated test data tooling for recurring test scenarios.</li>
+                <li>Integrated performance and load testing (Artillery) into microservice templates.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold">Education</h3>
+            <div className="mt-2 text-zinc-300">B.a</div>
+            <div className="text-zinc-400">University of Alabama - B.A • 2007</div>
+          </div>
+
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold">Summary</h3>
+            <p className="mt-2 text-zinc-300">
+              QUALITY ENGINEERING LEADER Backend Engineering | QA &amp; Automation Strategy | CI/CD | Scaling Teams &amp; Systems | Observability
+              Engineering leader with 12+ years of experience across backend, QA, and mobile engineering. Proven expertise in establishing QA/QE best practices, implementing robust test automation frameworks, integrating testing into CI/CD pipelines, and driving quality metrics across organizations. Skilled in stakeholder management, cross-functional collaboration, and scaling teams to deliver reliable, high-performing software solutions.
+            </p>
+          </div>
+
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold">KEY IMPACTS</h3>
+            <div className="mt-3 space-y-3">
+              <div>
+                <div className="font-medium">Receipt Processing Enhancement</div>
+                <p className="text-zinc-400">Increased daily receipt ingestion by 50%, processing 2 million orders with 1 million distinct users a day.</p>
+              </div>
+              <div>
+                <div className="font-medium">Ad Revenue Growth</div>
+                <p className="text-zinc-400">Boosted ad revenue by 15% through new ad partner integration and CMS layer to add placements without code changes.</p>
+              </div>
+              <div>
+                <div className="font-medium">Data Quality Improvements</div>
+                <p className="text-zinc-400">Optimized data ingestion monitoring with real-time checks for fields to drastically improve downstream purchase data quality for partners.</p>
+              </div>
+              <div>
+                <div className="font-medium">Mobile Release Optimizations</div>
+                <p className="text-zinc-400">Streamlined QA workflows, leading to 30% faster defect resolution times and improved team efficiency.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold">LANGUAGES AND FRAMEWORKS</h3>
+            <ul className="mt-2 grid list-disc grid-cols-1 gap-1 pl-5 text-zinc-300 sm:grid-cols-2 md:grid-cols-3">
+              <li>Go</li>
+              <li>Python</li>
+              <li>AWS</li>
+              <li>Ruby</li>
+              <li>Docker</li>
+              <li>End-To-End Testing</li>
+              <li>GitHub</li>
+              <li>Grafana</li>
+              <li>GraphQL</li>
+              <li>Java</li>
+              <li>Jenkins</li>
+              <li>JIRA</li>
+              <li>Kafka</li>
+              <li>Kubernetes</li>
+              <li>Load Testing</li>
+              <li>PostgreSQL</li>
+              <li>Python</li>
+              <li>Redis</li>
+              <li>Ruby</li>
+              <li>Scrum</li>
+              <li>Selenium</li>
+              <li>Slack</li>
+              <li>Snowflake</li>
+              <li>GitHub Actions</li>
+              <li>Microservices</li>
+              <li>gRPC</li>
+              <li>Appium</li>
+              <li>DynamoDB</li>
+              <li>In-Memory Caches</li>
+            </ul>
+          </div>
         </article>
         <div className="mt-8">
           <Link href="/" className="badge hover:border-zinc-600">← Back home</Link>
