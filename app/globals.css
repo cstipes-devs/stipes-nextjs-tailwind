@@ -6,10 +6,7 @@ html, body { height: 100%; }
 
 body {
   @apply bg-black text-zinc-200;
-  background:
-    radial-gradient(1200px 800px at 80% -10%, rgba(0, 168, 224, 0.5), transparent 60%),
-    radial-gradient(900px 600px at -10% 10%, rgba(0, 168, 224, 0.32), transparent 55%),
-    #0b0b0b;
+  background: linear-gradient(to bottom, #0a2433 0%, #051521 70%, #000000 100%);
 }
 
 .container-narrow { @apply max-w-6xl mx-auto px-6; }
