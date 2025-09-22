@@ -5,18 +5,34 @@ import { Section } from "./components/Section";
 import { StatCard } from "./components/StatCard";
 import { ChatWidget } from "./components/ChatWidget";
 import { WipIcon } from "./components/WipIcon";
+import { AngledDivider } from "./components/AngledDivider";
+import { BackToTop } from "./components/BackToTop";
 
 export default function Page() {
   return (
-    <main>
+    <main id="top">
       <Navbar />
       <Hero />
+      <AngledDivider className="my-6 md:my-10" />
 
-      <div className="container-narrow mt-12 grid gap-6 md:grid-cols-4">
-        <StatCard label="Monthly Active Users" value="12M+" />
-        <StatCard label="Peak Throughput" value="80k RPS" />
-        <StatCard label="Crash free users" value="99.9%" hint="Release once a week on iOS and Android" />
-        <StatCard label="Receipts / week" value="80M+" />
+      <div className="container-narrow mt-12 grid gap-6 md:grid-cols-2 items-start">
+        <div className="grid gap-6" id="work">
+          <StatCard label="Peak Throughput" value="80k RPS" />
+          <StatCard label="Stable Mobile Releases / year" value="52" hint="Once a week on iOS and Android" />
+          <StatCard label="Receipts / week" value="80M+" />
+        </div>
+        <div className="card p-6">
+          <div className="badge">Let’s work together</div>
+          <h3 className="mt-3 text-2xl font-semibold">Ready to build reliable systems?</h3>
+          <p className="mt-2 text-zinc-400">
+            I lead teams to ship stable, scalable platforms with strong SLOs, clean interfaces, and observability-first practices.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <a className="rounded-full bg-white px-4 py-2 text-sm font-medium text-black shadow-soft hover:bg-white/90" href="mailto:chris.stipes@gmail.com">Email Chris</a>
+            <a className="badge hover:border-zinc-600" href="https://www.linkedin.com/in/chris-stipes-186ab033/" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+            <a className="badge hover:border-zinc-600" href="https://github.com/cstipes-devs" target="_blank" rel="noreferrer noopener">GitHub</a>
+          </div>
+        </div>
       </div>
 
       <Section title="What I Do" eyebrow="Capabilities">
@@ -106,6 +122,7 @@ export default function Page() {
 
       <ChatWidget />
 
+      <div id="writing" />
       <Section title="Writing" eyebrow="Notes">
         <div className="grid gap-6 md:grid-cols-2">
           <a className="card p-6 hover:border-zinc-600 transition" href="#">
@@ -128,6 +145,7 @@ export default function Page() {
       </Section>
 
       <Footer />
+      <BackToTop />
     </main>
   );
 }
