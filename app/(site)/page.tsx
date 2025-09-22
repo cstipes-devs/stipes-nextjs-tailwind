@@ -125,13 +125,12 @@ export default function Page() {
       <div id="writing" />
       <Section title="Writing" eyebrow="Notes">
         <div className="grid gap-6 md:grid-cols-2">
-          <a className="card p-6 hover:border-zinc-600 transition" href="#">
+          <a className="card p-6 hover:border-zinc-600 transition" href="/writing/chat-bot">
             <div className="flex items-center justify-between">
-              <div className="badge">Architecture</div>
-              <WipIcon />
+              <div className="badge">Case Study</div>
             </div>
-            <h3 className="mt-3 text-xl font-semibold">SLOs that matter</h3>
-            <p className="mt-2 text-zinc-400">Picking the right golden signals for your users—not your dashboards.</p>
+            <h3 className="mt-3 text-xl font-semibold">How I built this site and chat bot</h3>
+            <p className="mt-2 text-zinc-400">A minimal Go service wrapping OpenAI + a clean Next.js/Tailwind frontend with a wired chat widget.</p>
           </a>
           <a className="card p-6 hover:border-zinc-600 transition" href="#">
             <div className="flex items-center justify-between">
