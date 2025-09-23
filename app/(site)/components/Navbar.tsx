@@ -5,7 +5,7 @@ export function Navbar() {
         <a href="#" className="font-semibold tracking-tight">Chris Stipes</a>
         <nav className="flex items-center gap-4 text-sm text-zinc-300">
           <a className="hover:text-white" href="#work">Work</a>
-          <a className="hover:text-white" href="#writing">Writing</a>
+          <a className="hover:text-white" href="#blog">Blog</a>
           <a className="hover:text-white" href="/about">About</a>
           <a className="hover:text-white" href="https://github.com/cstipes-devs" target="_blank" rel="noreferrer noopener">GitHub</a>
           <a

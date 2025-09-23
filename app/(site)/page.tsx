@@ -122,10 +122,10 @@ export default function Page() {
 
       <ChatWidget />
 
-      <div id="writing" />
-      <Section title="Writing" eyebrow="Notes">
+      <div id="blog" />
+      <Section title="Blog" eyebrow="Blog">
         <div className="grid gap-6 md:grid-cols-2">
-          <a className="card p-6 hover:border-zinc-600 transition" href="/writing/chat-bot">
+          <a className="card p-6 hover:border-zinc-600 transition" href="/blog/chat-bot">
             <div className="flex items-center justify-between">
               <div className="badge">Case Study</div>
             </div>
