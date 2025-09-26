@@ -6,7 +6,6 @@ import { StatCard } from "./components/StatCard";
 import { ChatWidget } from "./components/ChatWidget";
 import { WipIcon } from "./components/WipIcon";
 import { AngledDivider } from "./components/AngledDivider";
-import { BackToTop } from "./components/BackToTop";
 
 export default function Page() {
   return (
@@ -144,7 +143,6 @@ export default function Page() {
       </Section>
 
       <Footer />
-      <BackToTop />
     </main>
   );
 }
