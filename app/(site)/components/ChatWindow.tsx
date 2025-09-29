@@ -15,7 +15,7 @@ export function ChatWindow() {
       id: "intro-1",
       role: "assistant",
       content:
-        "hello! I am Chris Stipes' resume assistant, ask me anything about him or his work experience!",
+        "Hey, YO! I am Chris Stipes' resume assistant, ask me anything about him, his work experience, or this site.",
     },
   ]);
   const [input, setInput] = useState("");

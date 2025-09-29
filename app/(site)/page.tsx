@@ -16,13 +16,13 @@ export default function Page() {
 
       <div className="container-narrow mt-12 grid gap-6 md:grid-cols-2 items-start">
         <div className="grid gap-6" id="work">
-          <StatCard label="Peak Throughput" value="80k RPS" />
-          <StatCard label="Stable Mobile Releases / year" value="52" hint="Once a week on iOS and Android" />
-          <StatCard label="Receipts / week" value="80M+" />
+          <StatCard label="Services that survive Super Bowl commercial scale." value="Peak 80k RPS burst and 5x normal traffic for hours after commercial." />
+          <StatCard label="QA Practices that enable fast iterations." value="Weekly mobile releases on both iOS and Android with 99.98% crash free users. "  />
+          <StatCard label="Experiences that users love." value="Digital Receipt users doubled after a faster, more reliable, easier to use re-design." />
         </div>
         <div className="card p-6">
           <div className="badge">Let’s work together</div>
-          <h3 className="mt-3 text-2xl font-semibold">Ready to build reliable systems?</h3>
+          <h3 className="mt-3 text-2xl font-semibold">Ready to build?</h3>
           <p className="mt-2 text-zinc-400">
             I lead teams to ship stable, scalable platforms with strong SLOs, clean interfaces, and observability-first practices.
           </p>
@@ -122,7 +122,7 @@ export default function Page() {
       <ChatWidget />
 
       <div id="blog" />
-      <Section title="Blog" eyebrow="Blog">
+      <Section title="Blog">
         <div className="grid gap-6 md:grid-cols-2">
           <a className="card p-6 hover:border-zinc-600 transition" href="/blog/chat-bot">
             <div className="flex items-center justify-between">
