@@ -16,9 +16,9 @@ export default function Page() {
 
       <div className="container-narrow mt-12 grid gap-6 md:grid-cols-2 items-start">
         <div className="grid gap-6" id="work">
-          <StatCard label="Services that survive Super Bowl commercial scale." value="Peak 80k RPS burst and 5x normal traffic for hours after commercial." />
-          <StatCard label="QA Practices that enable fast iterations." value="Weekly mobile releases on both iOS and Android with 99.98% crash free users. "  />
-          <StatCard label="Experiences that users love." value="Digital Receipt users doubled after a faster, more reliable, easier to use re-design." />
+          <StatCard label="Peak 80k RPS burst and 5x normal traffic for hours after commercial." value="Services that survive Super Bowl commercial scale." />
+          <StatCard label="Weekly mobile releases on both iOS and Android with 99.98% crash free users." value="QA Practices that enable fast iterations." />
+          <StatCard label="Digital Receipt users doubled after a faster, more reliable, easier to use re-design." value="Experiences that users love." />
         </div>
         <div className="card p-6">
           <div className="badge">Let’s work together</div>
