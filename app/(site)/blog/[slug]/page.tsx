@@ -49,9 +49,6 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
       </p>
       <h1>{frontmatter.title}</h1>
       <p className="text-zinc-300">{frontmatter.description}</p>
-      <Link href="/blog" className="mt-4 inline-flex items-center text-sm font-medium text-accent-500 hover:text-accent-300">
-        Back to all posts
-      </Link>
       <div className="mt-8">{content}</div>
     </article>
   );
