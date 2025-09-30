@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { Hero } from "./components/Hero";
@@ -6,8 +7,10 @@ import { StatCard } from "./components/StatCard";
 import { ChatWidget } from "./components/ChatWidget";
 import { WipIcon } from "./components/WipIcon";
 import { AngledDivider } from "./components/AngledDivider";
+import { getAllPostMetadata } from "@/lib/mdx";
 
-export default function Page() {
+export default async function Page() {
+  const posts = await getAllPostMetadata();
   return (
     <main id="top">
       <Navbar />
@@ -124,21 +127,25 @@ export default function Page() {
       <div id="blog" />
       <Section title="Blog">
         <div className="grid gap-6 md:grid-cols-2">
-          <a className="card p-6 hover:border-zinc-600 transition" href="/blog/chat-bot">
-            <div className="flex items-center justify-between">
-              <div className="badge">Case Study</div>
+          {posts.length > 0 ? (
+            <Link href={`/blog/${posts[0].slug}`} className="card p-6 hover:border-zinc-600 transition">
+              <div className="flex items-center justify-between">
+                <div className="badge">{posts[0].frontmatter.badge ?? "Case Study"}</div>
+              </div>
+              <h3 className="mt-3 text-xl font-semibold">How I built this site and chat bot</h3>
+              <p className="mt-2 text-zinc-400">A minimal Go service wrapping OpenAI + a clean Next.js/Tailwind frontend with a wired chat widget.</p>
+            </Link>
+          ) : null}
+          {posts.length < 2 ? (
+            <div className="card p-6 border-dashed border-zinc-700 text-zinc-500">
+              <div className="flex items-center justify-between">
+                <div className="badge">Quality</div>
+                <WipIcon />
+              </div>
+              <h3 className="mt-3 text-xl font-semibold">More writing coming soon</h3>
+              <p className="mt-2 text-zinc-400">I share how I scale systems, teams, and testing culture.</p>
             </div>
-            <h3 className="mt-3 text-xl font-semibold">How I built this site and chat bot</h3>
-            <p className="mt-2 text-zinc-400">A minimal Go service wrapping OpenAI + a clean Next.js/Tailwind frontend with a wired chat widget.</p>
-          </a>
-          <a className="card p-6 hover:border-zinc-600 transition" href="#">
-            <div className="flex items-center justify-between">
-              <div className="badge">Quality</div>
-              <WipIcon />
-            </div>
-            <h3 className="mt-3 text-xl font-semibold">Load testing that sticks</h3>
-            <p className="mt-2 text-zinc-400">Keeping perf baselines alive after the first big launch.</p>
-          </a>
+          ) : null}
         </div>
       </Section>
 

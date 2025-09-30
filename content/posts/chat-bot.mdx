@@ -1,0 +1,137 @@
+
+---
+title: "Fighting AI with AI: Building a Resume Chatbot"
+description: "Wrapping OpenAI's Responses API in a tiny Go service and a Next.js UI so recruiters can interrogate my resume conversationally."
+publishedAt: "2024-09-01"
+badge: "Case Study"
+readingTime: "8 min"
+slug: "chat-bot"
+---
+
+[← Back home](/)
+
+# Fighting AI with AI: Building a Resume Chatbot
+
+Applying for jobs today often feels unfair. Before a human recruiter ever sees your application, it’s usually filtered through an AI resume screener. You still hand-craft a resume (or double-check what ChatGPT gives you), re-enter the same info in endless forms, and hope for a response.
+
+I wanted to turn the tables—to fight AI with AI—and learn OpenAI’s APIs along the way. This post shows how to build a lightweight chatbot that answers questions about your work history, powered by your own Markdown files. Even if you’re not job hunting, it’s a clean way to learn the OpenAI SDK and context injection.
+
+## Architecture Diagram
+
+![Diagram showing the chat UI flowing into the Go service, which proxies calls to the OpenAI API with embedded Markdown context.](/architecture.png)
+
+## Tech Stack
+
+- **Frontend:** TypeScript / React (Next.js)
+- **Backend:** Go (Lambda-style microservice)
+- **AI:** OpenAI v2 Go SDK (Responses API)
+- **Deploy:** Vercel for simple hosting
+
+## Concept
+
+The goal is simple: let ChatGPT interpret questions and return accurate, concise answers about me and my career.
+
+*Why not just call a custom GPT directly from the UI?* Because that’s not supported via API today. Instead, I wrapped the ChatGPT API in a tiny Go service that injects resume/project context at runtime. It’s essentially the same pattern custom GPTs use under the hood.
+
+## Setup
+
+1. **Create an OpenAI account & key.**  
+   Set a spending limit to avoid surprises if your chatbot goes viral or gets abused:  
+   [platform.openai.com/settings/organization/limits](https://platform.openai.com/settings/organization/limits)
+
+2. **Skim the Go SDK docs.**  
+   They aren’t the most intuitive, but they cover the options you need:  
+   [github.com/openai/openai-go/blob/main/api.md](https://github.com/openai/openai-go/blob/main/api.md)
+
+For this project, I use the `Responses` API with `ResponseInputText` to combine:
+
+- System-level style instructions  
+- Context from files (resume, bio, project notes)  
+- The user’s actual question  
+
+## Composing the Request
+
+System instructions, context, then the user’s question:
+
+```go
+// Compose input as messages: system instructions, context, then user question.
+input := responses.ResponseInputParam{
+  responses.ResponseInputItemParamOfMessage(
+    "You are a concise, helpful engineering assistant. Always rewrite retrieved content into clear, polished, human-readable sentences (not raw lists or fragments).",
+    responses.EasyInputMessageRoleSystem,
+  ),
+  // Context block with embedded resume/project data
+  responses.ResponseInputItemParamOfMessage(contextBlock, responses.EasyInputMessageRoleSystem),
+  // Wrap the user's question with explicit formatting instructions
+  responses.ResponseInputItemParamOfMessage(
+    fmt.Sprintf("Answer the following in one or two natural sentences: %s", userMsg),
+    responses.EasyInputMessageRoleUser,
+  ),
+}
+```
+
+### What each part does
+
+- **Role instruction:** tells the model how to behave (concise, polished answers).  
+- **Context block:** embeds resume/project data for grounded answers.  
+- **User prompt:** wraps the question with formatting guidance for brevity and clarity.  
+
+## Embedding Context Files
+
+I only needed Markdown files (resume, bio, projects). Go’s `embed` makes this easy—load them at boot and keep them in memory:
+
+```go
+func FilesMap() map[string]string {
+  out := make(map[string]string)
+  entries, err := FS.ReadDir("assets")
+  if err != nil {
+    log.Printf("failed to read embedded assets: %v", err)
+    return out
+  }
+  for _, e := range entries {
+    name := e.Name()
+    b, err := FS.ReadFile("assets/" + name)
+    if err != nil {
+      log.Printf("warn: cannot read %s: %v", name, err)
+      continue
+    }
+    lower := strings.ToLower(name)
+    if strings.HasSuffix(lower, ".md") || strings.HasSuffix(lower, ".txt") {
+      out[name] = string(b)
+    } else {
+      out[name] = fmt.Sprintf("[binary file loaded: %s, %d bytes]", name, len(b))
+    }
+  }
+  return out
+}
+```
+
+With that, you can pass a combined `contextBlock` into the Responses API call alongside your system and user messages.
+
+## Putting It All Together
+
+Once the API layer is in place, the frontend just sends a chat message. Example cURL:
+
+```bash
+curl --location 'https://stipes-openai-chat.vercel.app/chat'   --header 'Content-Type: application/json'   --header 'Accept: application/json'   --data '{
+    "message": "What’s his favorite color?"
+  }'
+```
+
+That’s it—a tiny service that wraps ChatGPT, injects your personal context, and returns clear, human-readable answers.
+
+## Lessons Learned
+
+- The Go SDK is powerful but the docs can be a bit rough; small working examples are worth gold.  
+- Injecting context from Markdown is simple and effective—you don’t need a full retrieval pipeline for small projects.  
+- Controlling the system prompt is the fastest way to shape tone and response quality.  
+
+## Next Steps
+
+- Add a proper chat widget with typing indicators and in-memory history.  
+- Explore lightweight retrieval scoring so only the most relevant resume bullets get injected.  
+- Experiment with function calling to turn answers into structured JSON (for graphing skills, timelines, etc.).  
+
+## Closing Thoughts
+
+Wrapping the OpenAI Go SDK in a microservice gives you control over context and formatting—the essence of how custom GPTs work. Whether it lands your next job or just levels up your portfolio, it’s a simple, meaningful project that teaches the right concepts.
