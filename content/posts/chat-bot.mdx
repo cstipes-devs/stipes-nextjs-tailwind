@@ -1,10 +1,12 @@
+
 [← Back home](/)
 
-# Fighting AI with AI: Building a Resume Chatbot
+# Make your portfolio standout with AI!
 
-Applying for jobs today often feels unfair. Before a human recruiter ever sees your application, it’s usually filtered through an AI resume screener. You still hand-craft a resume (or double-check what ChatGPT gives you), re-enter the same info in endless forms, and hope for a response.
 
-I wanted to turn the tables—to fight AI with AI—and learn OpenAI’s APIs along the way. This post shows how to build a lightweight chatbot that answers questions about your work history, powered by your own Markdown files. Even if you’re not job hunting, it’s a clean way to learn the OpenAI SDK and context injection.
+AI is everywhere right now. Nearly every recruiter I talk to drops some variation of, _“we’re looking for people with AI experience.”_ But let’s be real — slapping a Custom GPT onto your portfolio feels clunky. Too many dependencies, and anyone who wants to try it has to create an account first.
+
+Instead, I set out to build something cleaner — a project that demonstrates a couple of core AI principles (prompts and context augmentation) in a way that’s simple, practical, and personal. The best training data I could think of? ME.
 
 ## Architecture Diagram
 
@@ -21,7 +23,16 @@ I wanted to turn the tables—to fight AI with AI—and learn OpenAI’s APIs al
 
 The goal is simple: let ChatGPT interpret questions and return accurate, concise answers about me and my career.
 
-*Why not just call a custom GPT directly from the UI?* Because that’s not supported via API today. Instead, I wrapped the ChatGPT API in a tiny Go service that injects resume/project context at runtime. It’s essentially the same pattern custom GPTs use under the hood.
+*Why not just call a custom GPT directly from the UI?* Because that’s not supported via API today. Instead, I wrapped the ChatGPT API in a tiny Go service that injects resume/project context at call time. It’s essentially the same pattern custom GPTs use under the hood but done via their API, not custom GPT configs.
+
+#### What I WILL NOT cover:
+I'm only going to focus on the openAI sdk interaction in this post, but I'll link the readmes in my github for the various pieces.  
+
+- **How to build the website with chat window**: Heres the source for my site, simple Next.js and Tailwind site: [Link](https://github.com/cstipes-devs/stipes-nextjs-tailwind)
+- **How to build the go service**: Very simple go service that wraps an openAI Http client: [Link](https://github.com/cstipes-devs/stipes-openai-chat)
+- **How to deploy with vercel**: Easy free hosting and their docs are good! 
+	- For my FE: [Vercel Docs](https://vercel.com/docs/frameworks/full-stack/nextjs)
+	- For backend function: [Vercel Docs](https://vercel.com/docs/functions/runtimes/go)
 
 ## Setup
 
