@@ -6,7 +6,13 @@ export default defineConfig({
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],
     setupFiles: [],
     coverage: {
-      enabled: false,
+      enabled: true,
+      provider: 'v8',
+      reporter: ['text', 'html', 'lcov'],
+      lines: 80,
+      statements: 80,
+      functions: 80,
+      branches: 80,
     },
   },
   esbuild: {
