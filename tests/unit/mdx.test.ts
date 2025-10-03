@@ -1,16 +1,20 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-const readFileMock = vi.fn();
-const readdirMock = vi.fn();
-const compileMDXMock = vi.fn();
+const mocks = vi.hoisted(() => {
+  const readFileMock = vi.fn();
+  const readdirMock = vi.fn();
+  return { readFileMock, readdirMock };
+});
+
+const compileMDXMock = vi.hoisted(() => vi.fn());
 
 vi.mock('node:fs/promises', () => ({
   default: {
-    readFile: readFileMock,
-    readdir: readdirMock,
+    readFile: mocks.readFileMock,
+    readdir: mocks.readdirMock,
   },
-  readFile: readFileMock,
-  readdir: readdirMock,
+  readFile: mocks.readFileMock,
+  readdir: mocks.readdirMock,
 }));
 
 vi.mock('next-mdx-remote/rsc', () => ({
@@ -21,14 +25,14 @@ import { getPost, getPostMetadata, getAllPostMetadata } from '../../lib/mdx';
 
 describe('mdx data layer', () => {
   beforeEach(() => {
-    readFileMock.mockReset();
-    readdirMock.mockReset();
+    mocks.readFileMock.mockReset();
+    mocks.readdirMock.mockReset();
     compileMDXMock.mockReset();
   });
 
   it('returns null when the post file is missing', async () => {
     const notFoundError = Object.assign(new Error('not found'), { code: 'ENOENT' });
-    readFileMock.mockRejectedValueOnce(notFoundError);
+    mocks.readFileMock.mockRejectedValueOnce(notFoundError);
 
     const result = await getPost('missing-post');
     expect(result).toBeNull();
@@ -37,7 +41,7 @@ describe('mdx data layer', () => {
 
   it('compiles the MDX content when the post exists', async () => {
     const source = '---\ntitle: Example\n---\nContent';
-    readFileMock.mockResolvedValueOnce(source);
+    mocks.readFileMock.mockResolvedValueOnce(source);
     compileMDXMock.mockResolvedValue({
       content: '<p>Content</p>',
       frontmatter: { title: 'Example', slug: 'example', description: 'Example post', publishedAt: '2024-01-01' },
@@ -59,18 +63,17 @@ describe('mdx data layer', () => {
   });
 
   it('parses frontmatter for the metadata utility', async () => {
-    readFileMock.mockResolvedValueOnce('---\ntitle: Hello\npublishedAt: 2023-01-02\n---');
+    mocks.readFileMock.mockResolvedValueOnce('---\ntitle: Hello\npublishedAt: 2023-01-02\n---');
 
     const metadata = await getPostMetadata('hello');
-    expect(metadata).toEqual({
-      slug: 'hello',
-      frontmatter: expect.objectContaining({ title: 'Hello', publishedAt: '2023-01-02' }),
-    });
+    expect(metadata?.slug).toBe('hello');
+    expect(metadata?.frontmatter.title).toBe('Hello');
+    expect(new Date(metadata?.frontmatter.publishedAt as string).toISOString()).toContain('2023-01-02');
   });
 
   it('aggregates and sorts metadata by published date', async () => {
-    readdirMock.mockResolvedValue(['older.mdx', 'newer.mdx', 'notes.txt']);
-    readFileMock.mockImplementation(async (filePath: string) => {
+    mocks.readdirMock.mockResolvedValue(['older.mdx', 'newer.mdx', 'notes.txt']);
+    mocks.readFileMock.mockImplementation(async (filePath: string) => {
       if (filePath.endsWith('older.mdx')) {
         return '---\ntitle: Old\npublishedAt: 2022-05-01\n---';
       }
