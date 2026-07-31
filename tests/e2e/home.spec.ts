@@ -1,6 +1,6 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
-test('home page renders hero heading', async ({ page }) => {
-  await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: /chris stipes/i })).toBeVisible();
+test('home page renders hero heading', async ({ homePage }) => {
+  await homePage.goto();
+  await expect(homePage.heroHeading).toBeVisible();
 });
