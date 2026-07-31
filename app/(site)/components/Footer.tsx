@@ -4,7 +4,7 @@ export function Footer() {
       <div className="container-narrow py-12 text-sm text-zinc-400">
         <div className="grid gap-10 md:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
           <div>
-            <h2 className="text-lg font-semibold text-white">Let's start a project</h2>
+            <h2 className="text-lg font-semibold text-white">Let&apos;s start a project</h2>
             <form
               className="mt-6 grid gap-4"
               action="mailto:chris.stipes@gmail.com"

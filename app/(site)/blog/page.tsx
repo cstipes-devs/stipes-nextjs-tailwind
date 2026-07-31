@@ -13,7 +13,7 @@ export default async function BlogIndexPage() {
     <main className="max-w-3xl mx-auto px-4 md:px-0 py-12">
       <h1 className="text-3xl font-semibold">Writing & Case Studies</h1>
       <p className="mt-2 text-zinc-400">
-        Systems at scale, quality by design, and experiments with OpenAI's APIs.
+        Systems at scale, quality by design, and experiments with OpenAI&apos;s APIs.
       </p>
 
       <ul className="mt-10 space-y-8">

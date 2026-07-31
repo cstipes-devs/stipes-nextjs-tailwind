@@ -39,7 +39,8 @@ export async function POST(req: Request) {
       status: upstream.status,
       headers: { "content-type": contentType || "text/plain; charset=utf-8" },
     });
-  } catch (err: any) {
-    return NextResponse.json({ error: err?.message || "Request failed" }, { status: 500 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "";
+    return NextResponse.json({ error: message || "Request failed" }, { status: 500 });
   }
 }

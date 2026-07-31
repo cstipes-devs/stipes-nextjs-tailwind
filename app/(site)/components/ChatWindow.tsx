@@ -77,10 +77,11 @@ export function ChatWindow() {
 
       const safeText = replyText && replyText.trim().length > 0 ? replyText : "(no content)";
       setMessages((m) => [...m, { id: id + "-a", role: "assistant", content: safeText }]);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "";
       setMessages((m) => [
         ...m,
-        { id: id + "-e", role: "error", content: err?.message || "Request failed" },
+        { id: id + "-e", role: "error", content: message || "Request failed" },
       ]);
     } finally {
       setLoading(false);

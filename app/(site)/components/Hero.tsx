@@ -31,10 +31,10 @@ export function Hero() {
               href="mailto:chris.stipes@gmail.com"
               aria-label="Contact Chris Stipes via email"
             >
-              Let's Talk
+              Let&apos;s Talk
             </a>
           </div>
-          <p className="mt-4 text-base font-semibold text-zinc-100 md:text-lg">Let's work together to build reliable systems.</p>
+          <p className="mt-4 text-base font-semibold text-zinc-100 md:text-lg">Let&apos;s work together to build reliable systems.</p>
           <p className="mt-4 max-w-2xl text-zinc-400">
             Engineering leader with 12+ years of experience across backend, platform, QA, and mobile engineering. I scale teams, modernize infrastructure, and build resilient, observable, and secure systems—integrating with external providers, driving API interoperability, and architecting AWS serverless data pipelines. Passionate about developer velocity, testing in production, and building high-impact platforms; hands-on with a people-first leadership style.
           </p>
