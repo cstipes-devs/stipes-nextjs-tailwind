@@ -17,7 +17,7 @@ export function Navbar() {
           </a>
           <a
             className="rounded-full border border-zinc-700 px-4 py-1.5 font-medium text-zinc-200 shadow-soft transition hover:border-zinc-500 hover:text-white"
-            href="/resume.pdf"
+            href="/resume072026.pdf"
             aria-label="Download resume PDF"
           >
             Download Resume (PDF)

@@ -55,9 +55,15 @@ test.describe('@smoke critical flows', () => {
     await expect(reply).not.toBeEmpty();
   });
 
-  test('resume PDF is downloadable @smoke', async ({ request }) => {
-    const response = await request.get('/resume.pdf');
+  test('resume PDF is downloadable @smoke', async ({ homePage, request }) => {
+    // Follow the actual navbar link rather than hardcoding the filename —
+    // the resume asset is renamed periodically (e.g. resume072026.pdf), and
+    // this certifies what a visitor actually clicks.
+    await homePage.goto();
+    const href = await homePage.navResumeLink.getAttribute('href');
+    expect(href).toBeTruthy();
 
+    const response = await request.get(href!);
     expect(response.ok()).toBeTruthy();
     expect(response.headers()['content-type']).toContain('pdf');
   });

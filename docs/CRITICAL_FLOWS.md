@@ -291,9 +291,11 @@ PDF.
 
 ### Implementation chain
 
-1. `app/(site)/components/Navbar.tsx` — links `/resume.pdf`
+1. `app/(site)/components/Navbar.tsx` — links the current resume asset
+   (`/resume072026.pdf` as of 2026-07-30)
 2. `app/(site)/components/Hero.tsx` — links `/ChristopherStipesResume_v3.pdf`
-3. `public/resume.pdf` — the static asset, served at `/resume.pdf`
+3. `public/resume072026.pdf` — the static asset; the filename is dated and
+   renamed periodically when the resume is updated
 
 ### Network and external dependencies
 
@@ -301,25 +303,28 @@ None; a static file served from `public/`.
 
 ### Invariants — do not break these
 
-- **`public/resume.pdf` must exist** and stay at that path — the navbar link
-  and the smoke test both depend on it.
-- **Resume links must point at a file that exists in `public/`.** Renaming the
-  asset without updating every referring link produces a silent 404 that no
-  current test catches.
+- **Every resume link must point at a file that exists in `public/`.** The
+  asset filename is dated and changes on each resume update; renaming it
+  without updating every referring link produces a 404. The smoke test
+  follows the navbar link's actual `href` (rename-proof), but
+  `tests/unit/navbar.test.tsx` asserts the literal path — update it in the
+  same change as any rename.
 
 > ⚠️ **Known defect (pre-existing, not introduced by this document):**
-> `Hero.tsx` links `/ChristopherStipesResume_v3.pdf`, but `public/` contains
-> only `resume.pdf`. **The hero's "Download Resume (PDF)" button 404s today.**
-> The navbar link is correct. Fix by pointing the hero at `/resume.pdf`, or by
-> adding the versioned file to `public/`. The smoke suite asserts `/resume.pdf`
-> only, so it will stay green either way — deliberately, so this doc records
-> the defect rather than a test masking it.
+> `Hero.tsx` links `/ChristopherStipesResume_v3.pdf`, which does not exist in
+> `public/`. **The hero's "Download Resume (PDF)" button 404s today.** The
+> navbar link is correct. Fix by pointing the hero at the current asset
+> (`/resume072026.pdf`) — or better, have both components share one constant
+> so future renames touch a single place. The smoke suite certifies the
+> navbar link only — deliberately, so this doc records the defect rather than
+> a test masking it.
 
 ### Covering tests
 
 | Test | File | What it certifies |
 |---|---|---|
-| resume asset | `tests/e2e/smoke.spec.ts` | `/resume.pdf` returns 200 with a PDF content type |
+| resume asset | `tests/e2e/smoke.spec.ts` | The navbar link's href returns 200 with a PDF content type |
+| navbar links | `tests/unit/navbar.test.tsx` | Navbar hrefs, including the literal resume path |
 
 The navbar's resume link locator lives in `tests/e2e/pages/HomePage.ts`
 (`navResumeLink`).

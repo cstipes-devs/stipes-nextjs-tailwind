@@ -58,8 +58,11 @@ because they interact with the tests:
 the live site with browser automation and records any drift it finds.
 
 `/playwright-tests [flow|all]` regenerates the page objects, fixtures, and
-specs from the flows doc, following the checklist in
-`.claude/skills/playwright-tests/reference/best-practices.md`.
+specs from the flows doc, following the best-practices checklist bundled with
+that skill.
+
+Both skills are shared across repos from `~/Documents/claude-toolkit`
+(symlinked into `~/.claude/skills/`), not stored in this repo.
 
 Content between `<!-- manual -->` and `<!-- /manual -->` in the flow doc is
 preserved verbatim across regenerations.

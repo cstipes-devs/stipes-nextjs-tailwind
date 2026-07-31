@@ -10,7 +10,7 @@ describe('Navbar', () => {
     expect(screen.getByLabelText('Chris Stipes home')).toHaveAttribute('href', '#top');
     expect(screen.getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about');
     expect(screen.getByRole('link', { name: 'Blog / Case Studies' })).toHaveAttribute('href', '#blog');
-    expect(screen.getByLabelText('Download resume PDF')).toHaveAttribute('href', '/resume.pdf');
+    expect(screen.getByLabelText('Download resume PDF')).toHaveAttribute('href', '/resume072026.pdf');
     expect(screen.getByLabelText('Contact Chris Stipes via email')).toHaveAttribute('href', 'mailto:chris.stipes@gmail.com');
   });
 });
