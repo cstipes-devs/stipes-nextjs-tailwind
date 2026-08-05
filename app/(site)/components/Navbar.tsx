@@ -1,3 +1,5 @@
+import { RESUME_PATH } from "@/lib/site";
+
 export function Navbar() {
   return (
     <div className="sticky top-0 z-50 border-b border-zinc-800/80 bg-black/60 backdrop-blur supports-[backdrop-filter]:bg-black/40">
@@ -17,7 +19,7 @@ export function Navbar() {
           </a>
           <a
             className="rounded-full border border-zinc-700 px-4 py-1.5 font-medium text-zinc-200 shadow-soft transition hover:border-zinc-500 hover:text-white"
-            href="/resume072026.pdf"
+            href={RESUME_PATH}
             aria-label="Download resume PDF"
           >
             Download Resume (PDF)

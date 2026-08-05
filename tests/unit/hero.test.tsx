@@ -2,6 +2,7 @@ import React from 'react';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Hero } from '../../app/(site)/components/Hero';
+import { RESUME_PATH } from '../../lib/site';
 
 describe('Hero', () => {
   it('renders the primary hero content', () => {
@@ -13,7 +14,7 @@ describe('Hero', () => {
     ).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Download resume PDF' })).toHaveAttribute(
       'href',
-      '/ChristopherStipesResume_v3.pdf'
+      RESUME_PATH
     );
   });
 });

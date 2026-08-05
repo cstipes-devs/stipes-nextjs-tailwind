@@ -1,6 +1,15 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  // Mirror the `@/*` path alias from tsconfig.json. Without it the coverage
+  // provider cannot resolve `@/…` imports and fails the whole test file with
+  // an opaque "Unexpected JSX expression" parse error.
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('.', import.meta.url)),
+    },
+  },
   test: {
     environment: 'jsdom',
     include: ['tests/**/*.test.ts', 'tests/**/*.test.tsx'],

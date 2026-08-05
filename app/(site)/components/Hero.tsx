@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { RESUME_PATH } from "@/lib/site";
 
 export function Hero() {
   return (
@@ -21,7 +22,7 @@ export function Hero() {
           <div className="mt-6 flex flex-wrap gap-3">
             <a
               className="rounded-full border border-zinc-700 px-4 py-1.5 text-sm font-medium text-zinc-200 shadow-soft transition hover:border-zinc-500 hover:text-white"
-              href="/ChristopherStipesResume_v3.pdf"
+              href={RESUME_PATH}
               aria-label="Download resume PDF"
             >
               Download Resume (PDF)

@@ -23,7 +23,7 @@
 | 1 | Chat assistant | P0 | `/` (widget) | `stipes-openai-chat.vercel.app` → OpenAI |
 | 2 | Home page render | P0 | `/` | none |
 | 3 | Blog index → post | P1 | `/blog`, `/blog/[slug]` | none (filesystem MDX) ⚠️ see defect |
-| 4 | Resume download | P1 | `/resume.pdf` | none (static asset) |
+| 4 | Resume download | P1 | `RESUME_PATH` (`lib/site.ts`) | none (static asset) |
 | 5 | About page | P2 | `/about` | none |
 
 ## How to use this document
@@ -290,6 +290,13 @@ not resolving in the deployment.
 **Criticality:** P1
 **Verified:** source-only
 
+> **Fixed in source, pending deploy (2026-08-05).** The hero link previously
+> pointed at `/ChristopherStipesResume_v3.pdf`, which does not exist, and 404'd
+> in production. Both links now share `RESUME_PATH`. Production still serves the
+> old build until the next deploy — re-run `npm run smoke` afterwards to
+> confirm, and `curl -I https://www.stipes.tech/ChristopherStipesResume_v3.pdf`
+> should stop mattering entirely (nothing links there anymore).
+
 ### What the user does
 
 Clicks "Download Resume (PDF)" in the navbar or the hero and gets the resume
@@ -297,10 +304,10 @@ PDF.
 
 ### Implementation chain
 
-1. `app/(site)/components/Navbar.tsx` — links the current resume asset
-   (`/resume072026.pdf` as of 2026-07-30)
-2. `app/(site)/components/Hero.tsx` — links `/ChristopherStipesResume_v3.pdf`
-3. `public/resume072026.pdf` — the static asset; the filename is dated and
+1. `lib/site.ts` — `RESUME_PATH`, the single source of truth for the asset path
+2. `app/(site)/components/Navbar.tsx` — links `RESUME_PATH`
+3. `app/(site)/components/Hero.tsx` — links `RESUME_PATH`
+4. `public/resume072026.pdf` — the static asset; the filename is dated and
    renamed periodically when the resume is updated
 
 ### Network and external dependencies
@@ -310,29 +317,24 @@ None; a static file served from `public/`.
 ### Invariants — do not break these
 
 - **Every resume link must point at a file that exists in `public/`.** The
-  asset filename is dated and changes on each resume update; renaming it
-  without updating every referring link produces a 404. The smoke test
-  follows the navbar link's actual `href` (rename-proof), but
-  `tests/unit/navbar.test.tsx` asserts the literal path — update it in the
-  same change as any rename.
-
-> ⚠️ **Known defect — CONFIRMED LIVE IN PRODUCTION (2026-07-31):**
-> `https://www.stipes.tech/ChristopherStipesResume_v3.pdf` returns **404**,
-> while `/resume072026.pdf` returns 200.
-> `Hero.tsx` links `/ChristopherStipesResume_v3.pdf`, which does not exist in
-> `public/`. **The hero's "Download Resume (PDF)" button 404s today.** The
-> navbar link is correct. Fix by pointing the hero at the current asset
-> (`/resume072026.pdf`) — or better, have both components share one constant
-> so future renames touch a single place. The smoke suite certifies the
-> navbar link only — deliberately, so this doc records the defect rather than
-> a test masking it.
+  asset filename is dated and changes on each resume update.
+- **The path is defined once, in `lib/site.ts` as `RESUME_PATH`.** Do not
+  hardcode it in a component. It previously lived as a literal in both `Hero`
+  and `Navbar`, and the two drifted — the navbar was updated on a rename while
+  the hero kept pointing at a deleted file, producing a silent production 404.
+- **Renaming the asset means editing two things:** the file in `public/` and
+  the `RESUME_PATH` constant. Unit tests import the constant, so they follow
+  automatically; `tests/e2e/resume.spec.ts` follows each link's real `href`,
+  so it is rename-proof by construction.
 
 ### Covering tests
 
 | Test | File | What it certifies |
 |---|---|---|
 | resume asset | `tests/e2e/smoke.spec.ts` | The navbar link's href returns 200 with a PDF content type |
-| navbar links | `tests/unit/navbar.test.tsx` | Navbar hrefs, including the literal resume path |
+| hero link resolves | `tests/e2e/resume.spec.ts` | The hero link's href returns 200 with a PDF content type |
+| links agree | `tests/e2e/resume.spec.ts` | Hero and navbar point at the same asset — catches the drift that caused the original 404 |
+| navbar / hero hrefs | `tests/unit/navbar.test.tsx`, `hero.test.tsx` | Both render `RESUME_PATH` |
 
 The navbar's resume link locator lives in `tests/e2e/pages/HomePage.ts`
 (`navResumeLink`).
