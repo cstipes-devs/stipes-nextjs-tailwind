@@ -9,8 +9,12 @@
 |---|---|
 | Generated | 2026-07-30 |
 | Commit | `c091f25` |
-| Verified against | source only — not verified against a deployment |
+| Verified against | `https://www.stipes.tech` on 2026-07-31 (all 5 smoke flows passed) |
 | Regenerate with | `/document-flows [url]` |
+
+> **Deployment note:** `stipes.tech` 307-redirects to `www.stipes.tech`. Smoke
+> runs pass against either, but prefer the canonical `www` host to avoid an
+> extra redirect on every navigation.
 
 ## Flow summary
 
@@ -224,9 +228,11 @@ None. Content is read from the filesystem at build time.
   `gray-matter` returns empty data and the index renders titleless, dateless,
   empty links — see the defect below.
 
-> ⚠️ **Known defect (pre-existing, found by the smoke suite, not introduced by
-> this document):** `content/posts/chat-bot.mdx` **has no frontmatter block at
-> all** — the file begins directly with body content. It has never had one
+> ⚠️ **Known defect — CONFIRMED LIVE IN PRODUCTION (2026-07-31):**
+> `https://www.stipes.tech/blog/chat-bot` renders **no `<title>` tag** and
+> **two `<h1>` elements**; the `/blog` index post link has empty text.
+> `content/posts/chat-bot.mdx` **has no frontmatter block at all** — the file
+> begins directly with body content. It has never had one
 > (`git show fba18c1:content/posts/chat-bot.mdx`). Consequences:
 >
 > - `/blog` renders the post as an **empty, invisible link**: no title, no
@@ -310,7 +316,9 @@ None; a static file served from `public/`.
   `tests/unit/navbar.test.tsx` asserts the literal path — update it in the
   same change as any rename.
 
-> ⚠️ **Known defect (pre-existing, not introduced by this document):**
+> ⚠️ **Known defect — CONFIRMED LIVE IN PRODUCTION (2026-07-31):**
+> `https://www.stipes.tech/ChristopherStipesResume_v3.pdf` returns **404**,
+> while `/resume072026.pdf` returns 200.
 > `Hero.tsx` links `/ChristopherStipesResume_v3.pdf`, which does not exist in
 > `public/`. **The hero's "Download Resume (PDF)" button 404s today.** The
 > navbar link is correct. Fix by pointing the hero at the current asset
@@ -373,6 +381,10 @@ None.
 
 ## Test architecture
 
+For the cross-repo picture — how this suite relates to the Go backend's four
+test layers, the wire contract between them, and known gaps — see
+[`TEST_ARCHITECTURE.md`](TEST_ARCHITECTURE.md).
+
 The Playwright suite is built on page objects and typed fixtures
 (regenerate with `/playwright-tests`):
 
@@ -398,8 +410,18 @@ npm run smoke:local
 ```
 
 `playwright.config.ts` switches on `SMOKE_BASE_URL`: when set, it becomes the
-`baseURL`, `webServer` is disabled, the timeout rises to 60s, and failed tests
-retry twice to absorb network flake.
+`baseURL`, `webServer` is disabled, the timeout rises to 60s, failed tests
+retry twice to absorb network flake, and **the run is filtered to `@smoke`
+specs only** — the other tiers mock the network, so pointing them at a real
+deployment is meaningless.
+
+`SMOKE_BASE_URL` may be set persistently in `.env.local` (loaded via
+`@next/env`); the `@smoke` filter above is what makes that safe. To force a
+full local run while it is set, pass an empty value: `SMOKE_BASE_URL= npm run e2e`.
+
+`PLAYWRIGHT_BASE_URL` is a different lever: it changes the **local** origin
+(and the port the dev server is started on) for when :3000 is taken. It does
+not disable `webServer` — never point it at a deployed site.
 
 Smoke tests never mock network traffic — mocking the dependency under
 certification would defeat their purpose — and never perform writes against a
