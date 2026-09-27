@@ -73,5 +73,6 @@ test.describe('@smoke critical flows', () => {
     expect(response?.ok()).toBeTruthy();
 
     await expect(aboutPage.heading).toBeVisible();
+    await expect(aboutPage.resumeViewer).toBeVisible();
   });
 });

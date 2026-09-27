@@ -23,8 +23,8 @@
 | 1 | Chat assistant | P0 | `/` (widget) | `stipes-openai-chat.vercel.app` → OpenAI |
 | 2 | Home page render | P0 | `/` | none |
 | 3 | Blog index → post | P1 | `/blog`, `/blog/[slug]` | none (filesystem MDX) ⚠️ see defect |
-| 4 | Resume download | P1 | `RESUME_PATH` (`lib/site.ts`) | none (static asset) |
-| 5 | About page | P2 | `/about` | none |
+| 4 | Resume download / view | P1 | `RESUME_PATH` (`lib/site.ts`) | none (static asset) |
+| 5 | About page (embedded résumé) | P2 | `/about` | none |
 
 ## How to use this document
 
@@ -285,30 +285,25 @@ not resolving in the deployment.
 
 ---
 
-## Flow 4: Resume download
+## Flow 4: Resume download / view
 
 **Criticality:** P1
 **Verified:** source-only
 
-> **Fixed in source, pending deploy (2026-08-05).** The hero link previously
-> pointed at `/ChristopherStipesResume_v3.pdf`, which does not exist, and 404'd
-> in production. Both links now share `RESUME_PATH`. Production still serves the
-> old build until the next deploy — re-run `npm run smoke` afterwards to
-> confirm, and `curl -I https://www.stipes.tech/ChristopherStipesResume_v3.pdf`
-> should stop mattering entirely (nothing links there anymore).
-
 ### What the user does
 
 Clicks "Download Resume (PDF)" in the navbar or the hero and gets the resume
-PDF.
+PDF, or visits `/about` and reads it in the embedded viewer (Flow 5).
 
 ### Implementation chain
 
 1. `lib/site.ts` — `RESUME_PATH`, the single source of truth for the asset path
 2. `app/(site)/components/Navbar.tsx` — links `RESUME_PATH`
 3. `app/(site)/components/Hero.tsx` — links `RESUME_PATH`
-4. `public/resume072026.pdf` — the static asset; the filename is dated and
-   renamed periodically when the resume is updated
+4. `app/(site)/about/page.tsx` — embeds `RESUME_PATH` in an `<object>` viewer
+   and links it ("Open resume PDF in new tab")
+5. `public/ChristopherStipes_Resume.pdf` — the static asset; the filename is
+   stable, and updating the resume means overwriting this file
 
 ### Network and external dependencies
 
@@ -316,13 +311,14 @@ None; a static file served from `public/`.
 
 ### Invariants — do not break these
 
-- **Every resume link must point at a file that exists in `public/`.** The
-  asset filename is dated and changes on each resume update.
+- **Every resume link and the `/about` viewer must point at a file that exists
+  in `public/`.** Update the resume by overwriting
+  `public/ChristopherStipes_Resume.pdf`, not by renaming it.
 - **The path is defined once, in `lib/site.ts` as `RESUME_PATH`.** Do not
-  hardcode it in a component. It previously lived as a literal in both `Hero`
+  hardcode it in a component (including `/about`). It previously lived as a literal in both `Hero`
   and `Navbar`, and the two drifted — the navbar was updated on a rename while
   the hero kept pointing at a deleted file, producing a silent production 404.
-- **Renaming the asset means editing two things:** the file in `public/` and
+- **If the asset is ever renamed, edit two things:** the file in `public/` and
   the `RESUME_PATH` constant. Unit tests import the constant, so they follow
   automatically; `tests/e2e/resume.spec.ts` follows each link's real `href`,
   so it is rename-proof by construction.
@@ -334,10 +330,12 @@ None; a static file served from `public/`.
 | resume asset | `tests/e2e/smoke.spec.ts` | The navbar link's href returns 200 with a PDF content type |
 | hero link resolves | `tests/e2e/resume.spec.ts` | The hero link's href returns 200 with a PDF content type |
 | links agree | `tests/e2e/resume.spec.ts` | Hero and navbar point at the same asset — catches the drift that caused the original 404 |
-| navbar / hero hrefs | `tests/unit/navbar.test.tsx`, `hero.test.tsx` | Both render `RESUME_PATH` |
+| about embeds same asset | `tests/e2e/resume.spec.ts` | `/about` viewer `data` and open-link `href` match the navbar href, which returns 200 PDF |
+| navbar / hero / about hrefs | `tests/unit/navbar.test.tsx`, `hero.test.tsx`, `about.test.tsx` | All render `RESUME_PATH` |
 
-The navbar's resume link locator lives in `tests/e2e/pages/HomePage.ts`
-(`navResumeLink`).
+The navbar and hero resume link locators live in `tests/e2e/pages/HomePage.ts`
+(`navResumeLink`, `heroResumeLink`); the viewer and open link live in
+`tests/e2e/pages/AboutPage.ts` (`resumeViewer`, `resumeOpenLink`).
 
 ### Failure modes
 
@@ -353,11 +351,15 @@ the filename.
 
 ### What the user does
 
-Visits `/about` for a static résumé: contact details and experience entries.
+Visits `/about` and reads the résumé PDF in an embedded viewer, or opens it in
+a new tab. Browsers that can't render PDFs inline (most mobile) see a fallback
+message with a download link.
 
 ### Implementation chain
 
-1. `app/(site)/about/page.tsx` — fully static server component
+1. `app/(site)/about/page.tsx` — fully static server component; an `<object
+   type="application/pdf" aria-label="Résumé PDF">` pointed at `RESUME_PATH`,
+   plus an "Open resume PDF in new tab" link
 
 ### Network and external dependencies
 
@@ -367,17 +369,27 @@ None.
 
 - **`/about` must return 200.** The navbar links to it from every page.
 - **No data fetching belongs here.** The page is intentionally static; adding
-  a loader gives it a new failure mode it does not currently have.
+  a loader gives it a new failure mode it does not currently have. The PDF is
+  rendered by the browser, not a JS library — keep it that way.
+- **The viewer and open link use `RESUME_PATH`** (Flow 4), never a literal.
+- **The `<object>` fallback content must contain a working download link.**
+  It is the only way mobile visitors reach the résumé from this page.
+- **Accessible names are test contracts:** viewer `"Résumé PDF"`, link
+  `"Open resume PDF in new tab"` (distinct from the navbar's
+  `"Download resume PDF"`, which is also on this page).
 
 ### Covering tests
 
 | Test | File | What it certifies |
 |---|---|---|
-| about reachable | `tests/e2e/smoke.spec.ts` | `/about` responds OK and renders a heading (via `tests/e2e/pages/AboutPage.ts`) |
+| about reachable | `tests/e2e/smoke.spec.ts` | `/about` responds OK and renders the heading and the résumé viewer (via `tests/e2e/pages/AboutPage.ts`) |
+| about embeds same asset | `tests/e2e/resume.spec.ts` | Viewer and open link point at the navbar's resume asset |
+| about renders `RESUME_PATH` | `tests/unit/about.test.tsx` | Viewer `data`, open link, and fallback link all use `RESUME_PATH` |
 
 ### Failure modes
 
-404 → route removed or renamed while the navbar link stayed.
+404 → route removed or renamed while the navbar link stayed. Blank viewer →
+`RESUME_PATH` points at a missing file (Flow 4).
 
 ---
 
